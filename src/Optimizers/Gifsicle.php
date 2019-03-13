@@ -8,7 +8,7 @@ class Gifsicle extends BaseOptimizer
 {
     public $binaryName = 'gifsicle';
 
-    public function canHandle(Image $image): bool
+    public function canHandle($image)
     {
         return $image->mime() === 'image/gif';
     }

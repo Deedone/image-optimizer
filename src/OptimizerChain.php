@@ -3,7 +3,6 @@
 namespace Spatie\ImageOptimizer;
 
 use Psr\Log\LoggerInterface;
-use Symfony\Component\Process\Process;
 
 class OptimizerChain
 {
@@ -21,7 +20,7 @@ class OptimizerChain
         $this->useLogger(new DummyLogger());
     }
 
-    public function getOptimizers(): array
+    public function getOptimizers()
     {
         return $this->optimizers;
     }
@@ -93,17 +92,20 @@ class OptimizerChain
         $command = $optimizer->getCommand();
 
         $this->logger->info("Executing `{$command}`");
+        $output = [];
+        $retval = 0;
+        exec($command,$output,$retval);
 
-        $process = Process::fromShellCommandline($command);
+//        $process = Process::fromShellCommandline($command);
 
-        $process
-            ->setTimeout($this->timeout)
-            ->run();
+//        $process
+//            ->setTimeout($this->timeout)
+//            ->run();
 
-        $this->logResult($process);
+//        $this->logResult($process);
     }
 
-    protected function logResult(Process $process)
+    protected function logResult($process)
     {
         if (! $process->isSuccessful()) {
             $this->logger->error("Process errored with `{$process->getErrorOutput()}`");
