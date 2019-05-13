@@ -8,7 +8,7 @@ class Image
 {
     protected $pathToImage = '';
 
-    public function __construct(string $pathToImage)
+    public function __construct($pathToImage)
     {
         if (! file_exists($pathToImage)) {
             throw new InvalidArgumentException("`{$pathToImage}` does not exist");
